@@ -160,15 +160,16 @@ Réponds UNIQUEMENT au format JSON JSON suivant (pas de texte avant ou après) :
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-center"
+                className="text-center w-[801px] max-w-full mx-auto"
               >
                 <div className="inline-block p-4 mb-6">
                   <Moon className="w-10 h-10 text-coral" />
                 </div>
                 <h1 className="text-4xl md:text-5xl dream-h1 mb-6">L'Interprète de Rêves</h1>
-                <p className="text-mid-gray max-w-xl mx-auto text-lg">
-                  Une lecture sobre et profonde de vos nuits. 
-                  Décryptage symbolique par intelligence collaborative.
+                <p className="text-mid-gray w-[800px] max-w-full mx-auto text-[14px]">
+                  Les symboles de vos rêves sont interprétés à partir de significations partagées par tous. 
+                  Mais chaque rêve est unique, et certains symboles n'appartiennent qu'à vous. 
+                  Leur sens profond mérite parfois une exploration plus personnelle.
                 </p>
               </motion.div>
             ) : (
@@ -182,7 +183,7 @@ Réponds UNIQUEMENT au format JSON JSON suivant (pas de texte avant ou après) :
                 <div className="inline-block p-4 mb-6">
                   <BookOpen className="w-10 h-10 text-sage" />
                 </div>
-                <h1 className="text-4xl md:text-5xl dream-h1 mb-6">Guide des Songes</h1>
+                <h1 className="text-4xl md:text-5xl dream-h1 mb-6">Guide des Rêves</h1>
                 <p className="text-mid-gray max-w-xl mx-auto text-lg">
                   Apprendre à écouter ce que votre subconscient 
                   tente de vous communiquer chaque nuit.
@@ -206,7 +207,7 @@ Réponds UNIQUEMENT au format JSON JSON suivant (pas de texte avant ou après) :
                   <textarea
                     id="dream-input"
                     className="w-full h-56 p-6 bg-transparent border-none focus:ring-0 resize-none text-deep-ink text-xl placeholder:text-mid-gray/30"
-                    placeholder="Décrivez votre songe avec précision..."
+                    placeholder="Décrivez votre rêve avec précision..."
                     value={dreamText}
                     onChange={(e) => setDreamText(e.target.value)}
                   />
@@ -356,7 +357,7 @@ Réponds UNIQUEMENT au format JSON JSON suivant (pas de texte avant ou après) :
         </main>
 
         <footer className="mt-12 text-center text-mid-gray/40 text-xs pb-12">
-          <p>© {new Date().getFullYear()} L'Interprète de Rêves — Approche sobre & analytique</p>
+          <p>Conçu et développé avec soin par Helena H.</p>
         </footer>
       </div>
     </div>
