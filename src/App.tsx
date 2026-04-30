@@ -1,7 +1,7 @@
-import { useState, useMemo, useEffect } from 'react';
-import { GoogleGenAI } from "@google/genai";
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "motion/react";
-import { Moon, Sparkles, BookOpen, Send, Loader2, ChevronRight, Info } from "lucide-react";
+import { Moon, Sparkles, BookOpen, Loader2 } from "lucide-react";
+import { GoogleGenAI } from "@google/genai";
 import Guide from './components/Guide';
 
 // Types based on the JSON structure
@@ -17,15 +17,6 @@ interface DictionaryEntry {
   source_url: string;
 }
 
-// Nettoie un mot (minuscules, sans accents)
-function cleanWord(word: string): string {
-  return word
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-}
-
-// Liste des mots vides à ignorer
 const STOP_WORDS = new Set([
   "le", "la", "les", "un", "une", "de", "du", "des", "a", "au", "aux",
   "je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles",
@@ -34,31 +25,32 @@ const STOP_WORDS = new Set([
   "ma", "ta", "sa", "mes", "tes", "ses", "y", "en", "est", "suis", "ete"
 ]);
 
+function cleanWord(word: string): string {
+  return word
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
 function detecterSymboles(texte: string, dictionnaire: DictionaryEntry[]): DictionaryEntry[] {
-  // Découper en mots
   const mots = texte.split(/[\s,.;:!?'-]+/).filter(m => m.length > 1);
   const symbolesTrouves: DictionaryEntry[] = [];
   
   mots.forEach(motBrut => {
     const motNettoye = cleanWord(motBrut);
-    
-    // Ignorer les stop words
     if (STOP_WORDS.has(motNettoye)) return;
     
-    // Chercher dans le dictionnaire
     dictionnaire.forEach(entry => {
       const motCleBrut = entry.mot_cle_principal.replace("Rêver de ", "").replace("rêver de ", "");
       const motCleNettoye = cleanWord(motCleBrut);
       
-      // Correspondance EXACTE après nettoyage
       if (motNettoye === motCleNettoye || motNettoye + "s" === motCleNettoye || motNettoye === motCleNettoye + "s") {
-        if (!symbolesTrouves.find(s => s.mot_cle_principal === entry.mot_cle_principal)) {
+        if (!symbolesTrouves.find((s: DictionaryEntry) => s.mot_cle_principal === entry.mot_cle_principal)) {
           symbolesTrouves.push(entry);
         }
       }
     });
   });
-  
   return symbolesTrouves;
 }
 
@@ -76,14 +68,11 @@ export default function App() {
 
   useEffect(() => {
     fetch('/dictionnaire_complet.json')
-      .then(response => {
-        if (!response.ok) throw new Error('Failed to load dictionary');
-        return response.json();
-      })
+      .then(res => res.json())
       .then(data => setDictionnaire(data))
       .catch(err => {
         console.error('Error loading dictionary:', err);
-        setError("Impossible de charger le dictionnaire des rêves.");
+        setError("L'interprète est en cours de maintenance technique (chargement du dictionnaire).");
       });
   }, []);
 
@@ -95,16 +84,10 @@ export default function App() {
     setResult(null);
 
     try {
-      // 1. Keyword detection
+      // 1. Detection
       const detectedSymbols = detecterSymboles(dreamText, dictionnaire);
 
-      if (detectedSymbols.length === 0) {
-        // If no symbols found, we still want Gemini to try but warn the user
-        // Or just use the text. The prompt says "based ONLY on provided symbols".
-        // Let's find at least something or tell Gemini to be general if none found.
-      }
-
-      // 2. Gemini Synthesis
+      // 2. Gemini
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
       const symbolsSummary = detectedSymbols
         .map(s => `${s.mot_cle_principal}: ${s.signification_generale}`)
@@ -117,14 +100,10 @@ Récit du rêve : "${dreamText}"
 Symboles détectés dans le dictionnaire :
 ${symbolsSummary || "Aucun symbole spécifique détecté dans le dictionnaire, base-toi sur le récit de manière générale mais reste sobre."}
 
-Réponds au format JSON suivant :
+Réponds UNIQUEMENT au format JSON JSON suivant (pas de texte avant ou après) :
 {
   "synthesis": "L'interprétation narrative ici...",
   "reflections": ["Piste 1", "Piste 2"]
-}Section JSON attendue :
-{
-  "synthesis": "Exemple d'interprétation...",
-  "reflections": ["Réflexion 1", "Réflexion 2"]
 }`;
 
       const response = await ai.models.generateContent({
