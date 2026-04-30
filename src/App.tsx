@@ -159,16 +159,16 @@ Réponds au format JSON suivant :
 
       <div className="max-w-4xl mx-auto px-4 py-8 relative z-10">
         <header className="flex flex-col items-center justify-center mb-12">
-          <div className="flex items-center gap-6 mb-8 bg-black/[0.03] p-1 rounded-full border border-black/[0.05]">
-            <button 
+          <div className="tab-wrapper mb-8">
+            <button
               onClick={() => setActiveTab('interpreter')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'interpreter' ? 'bg-white shadow-sm text-deep-ink' : 'text-mid-gray hover:text-deep-ink'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'interpreter' ? 'tab-active' : 'tab-inactive'}`}
             >
               Interprète
             </button>
-            <button 
+            <button
               onClick={() => setActiveTab('guide')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'guide' ? 'bg-white shadow-sm text-deep-ink' : 'text-mid-gray hover:text-deep-ink'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'guide' ? 'tab-active' : 'tab-inactive'}`}
             >
               Importance de rêver
             </button>
@@ -223,7 +223,7 @@ Réponds au format JSON suivant :
                 exit={{ opacity: 0, x: 10 }}
                 className="space-y-12"
               >
-                <section className="bg-white rounded-2xl shadow-sm border border-black/[0.03] p-1 overflow-hidden">
+                <section className="dream-textarea-wrapper">
                   <textarea
                     id="dream-input"
                     className="w-full h-56 p-6 bg-transparent border-none focus:ring-0 resize-none text-deep-ink text-xl placeholder:text-mid-gray/30"
@@ -231,7 +231,7 @@ Réponds au format JSON suivant :
                     value={dreamText}
                     onChange={(e) => setDreamText(e.target.value)}
                   />
-                  <div className="p-4 flex justify-end bg-main-bg/50 border-t border-black/[0.02]">
+                  <div className="p-4 flex justify-end dream-textarea-footer">
                     <button
                       id="interpret-button"
                       onClick={interpretDream}

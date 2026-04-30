@@ -15,7 +15,7 @@ export default function Guide() {
           <h2 className="text-3xl font-medium tracking-tight">Pourquoi prêter attention à vos rêves</h2>
         </div>
         
-        <div className="dream-card bg-white/50 backdrop-blur-sm">
+        <div className="dream-card">
           <h3 className="text-xl font-semibold mb-4 text-deep-ink">À quoi servent les rêves ?</h3>
           <div className="space-y-4 text-mid-gray leading-relaxed text-lg">
             <p>
@@ -32,25 +32,25 @@ export default function Guide() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <div className="p-6 rounded-xl border border-black/[0.03] bg-white/30">
+          <div className="p-6 rounded-xl border border-black/[0.06] bg-surface/60">
             <h4 className="font-semibold text-deep-ink mb-3 flex items-center gap-2">
               <Sun className="w-4 h-4 text-ochre" /> Régulation émotionnelle
             </h4>
             <p className="text-sm text-mid-gray">Les rêves aident à digérer les expériences difficiles.</p>
           </div>
-          <div className="p-6 rounded-xl border border-black/[0.03] bg-white/30">
+          <div className="p-6 rounded-xl border border-black/[0.06] bg-surface/60">
             <h4 className="font-semibold text-deep-ink mb-3 flex items-center gap-2">
               <Clipboard className="w-4 h-4 text-sage" /> Consolidation de la mémoire
             </h4>
             <p className="text-sm text-mid-gray">Ils trient ce qui est important de ce qui ne l'est pas.</p>
           </div>
-          <div className="p-6 rounded-xl border border-black/[0.03] bg-white/30">
+          <div className="p-6 rounded-xl border border-black/[0.06] bg-surface/60">
             <h4 className="font-semibold text-deep-ink mb-3 flex items-center gap-2">
               <PenTool className="w-4 h-4 text-coral" /> Résolution créative
             </h4>
             <p className="text-sm text-mid-gray">De nombreux artistes et scientifiques ont trouvé des solutions en rêve.</p>
           </div>
-          <div className="p-6 rounded-xl border border-black/[0.03] bg-white/30">
+          <div className="p-6 rounded-xl border border-black/[0.06] bg-surface/60">
             <h4 className="font-semibold text-deep-ink mb-3 flex items-center gap-2">
               <HelpCircle className="w-4 h-4 text-mid-gray" /> Signal d'alarme
             </h4>
@@ -121,7 +121,7 @@ export default function Guide() {
                 { label: "Ambiance", desc: "Faisait-il jour ou nuit ? Quel temps faisait-il ?" },
                 { label: "Émotions", desc: "Peur, joie, colère, tristesse, surprise, dégoût... C'est le plus important.", highlight: true },
               ].map((item, i) => (
-                <div key={i} className={`p-4 rounded-lg bg-white/50 border border-black/[0.03] ${item.highlight ? 'ring-1 ring-coral/20' : ''}`}>
+                <div key={i} className={`p-4 rounded-lg bg-surface border border-black/[0.06] ${item.highlight ? 'ring-1 ring-coral/25' : ''}`}>
                   <span className="font-bold text-deep-ink block mb-1">{item.label}</span>
                   <p className="text-xs text-mid-gray leading-tight">{item.desc}</p>
                 </div>
