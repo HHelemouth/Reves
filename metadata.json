@@ -1,5 +1,6 @@
 {
   "name": "L'Interprète de Rêves",
-  "description": "Une application élégante pour décoder les symboles de vos rêves en utilisant un dictionnaire complet et l'IA Gemini.",
-  "requestFramePermissions": []
+  "description": "Une approche sobre, analytique et collaborative de décryptage symbolique et d'exploration personnelle des rêves.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

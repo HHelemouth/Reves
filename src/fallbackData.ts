@@ -1,0 +1,418 @@
+export const fallbackSymbols = [
+  {
+    symbol: "Serpent",
+    category: "Animaux & Nature",
+    meaning: "Le serpent est l'un des archétypes les plus puissants du subconscient. Traditionnellement associé à la tentation, il représente chez Jung l'énergie vitale brute, la transformation (de par sa mue) et la sagesse occulte. Dans l'approche psychanalytique, il peut refléter un conflit pulsionnel ou une peur d'une force instinctuelle non maîtrisée.",
+    jung: "Archétype de la transformation de l'esprit, de la guérison (caducée) et de l'intégration de la part d'ombre.",
+    freud: "Symbole fortement phallique lié aux pulsions libidinales refoulées ou à une anxiété intime.",
+    advice: "Examinez l'émotion ressentie : la peur indique un conflit avec vos instincts, alors qu'une relation sereine avec l'animal présage de profondes transformations positives."
+  },
+  {
+    symbol: "Voler",
+    category: "Mouvements & Actions",
+    meaning: "Prendre de la hauteur, planer ou voler exprime un fort désir d'émancipation, de liberté intellectuelle ou spirituelle. C'est le rêve de libération par excellence. Cependant, si le vol est instable, il peut traduire le vertige face à des responsabilités accrues ou une tendance à fuir la réalité concrète.",
+    jung: "Indique souvent l'élévation au-dessus d'une situation terrestre oppressante, mais met en garde contre l'inflation de l'ego (le complexe d'Icare).",
+    freud: "Associé à la sensation de libération corporelle et à l'accomplissement de désirs infantiles d'omnipotence.",
+    advice: "Êtes-vous en train de fuir une vérité ancrée au sol, ou avez-vous sincèrement besoin de prendre du recul sur un problème complexe ?"
+  },
+  {
+    symbol: "Chute",
+    category: "Mouvements & Actions",
+    meaning: "Tomber dans le vide est l'un des songes les plus fréquents. Il est intimement lié à l'anxiété de perte de contrôle, à une insécurité face à un changement majeur (rupture, défi professionnel) ou à la peur de devoir abandonner une illusion flatteuse.",
+    jung: "Indique un retour forcé au principe de réalité (la Terre). C'est souvent un correctif du subconscient pour une attitude trop hautaine ou irréaliste.",
+    freud: "Peut être associé à l'abandon ou à la soumission à des pulsions physiques inconscientes.",
+    advice: "Identifiez les domaines de votre vie où vous tenez le contrôle de manière excessive. Apprenez à lâcher prise sur ce que vous ne pouvez pas maîtriser."
+  },
+  {
+    symbol: "Eau",
+    category: "Éléments",
+    meaning: "L'eau symbolise le réservoir infini de notre psyché inconsciente. L'état de l'eau réverbère vos sentiments profonds. Une eau claire évoque la sérénité et le calme intérieur ; une eau houleuse ou trouble signale des conflits émotionnels ou d'anciens secrets que vous n'avez pas surmontés.",
+    jung: "Représentation par excellence de l'inconscient collectif et de l'âme réceptive. S'y baigner annonce une nécessaire purification de vos convictions ordinaires.",
+    freud: "Souvent relié aux réminiscences de la période intra-utérine, à la renaissance, et au giron maternel sécurisant ou étouffant.",
+    advice: "Si l'eau déborde, vous êtes probablement débordé par votre propre émotivité consciente. Prenez le temps d'accueillir et de verbaliser vos ressentis."
+  },
+  {
+    symbol: "Mort",
+    category: "Événements de vie",
+    meaning: "Rêver de mort — la sienne ou celle d'un proche — est rarement prémonitoire. C'est l'expression symbolique d'un changement d'état majeur, de la fin d'un cycle et de la renaissance. Mourir dans un rêve signifie renoncer à de vieux schémas psychologiques pour faire de la place aux nouveautés.",
+    jung: "Le passage nécessaire de la mort à la résurrection de la conscience, illustrant le grand processus d'individuation.",
+    freud: "Le détachement d'une ancienne fixation libidinale ou l'expression d'un deuil affectif non résolu.",
+    advice: "Ne craignez pas ce rêve. Interrogez-vous plutôt : à quelle habitude, ou à quelle relation révolue, devez-vous aujourd'hui dire adieu pour avancer ?"
+  },
+  {
+    symbol: "Dents",
+    category: "Corps humain",
+    meaning: "Perdre ses dents évoque une perte d'agressivité nécessaire, de vitalité ou d'assurance. Les dents sont des outils de morsure et de mastication, symboles de pouvoir et d'assimilation de l'expérience extérieure. Les perdre traduit un sentiment d'impuissance créatrice ou une grande vulnérabilité sociale.",
+    jung: "Indique souvent une transition de vie difficultueuse, le passage de l'enfance (perte des dents de lait) à un nouvel état de maturité requis.",
+    freud: "Lié à la crainte de la castration constructive, à la sensation de perte du dynamisme intérieur ou à la culpabilité.",
+    advice: "Ce rêve invite à prêter attention à votre santé globale d'une part, et à restaurer votre confiance d'autre part. Osez exprimer vos désaccords pour reprendre votre assurance."
+  },
+  {
+    symbol: "Chat",
+    category: "Animaux & Nature",
+    meaning: "Le chat incarne l'indépendance, la sensibilité intuitive, le mystère féminin, mais aussi une part de ruse sauvage. Un chat amical représente l'harmonie avec votre intuition profonde, alors qu'un chat agressif ou sauvage suggère des tensions avec votre sensibilité.",
+    jung: "Représente l'Anima secrète ou le lien subtil avec le monde intuitif inconscient.",
+    freud: "Symbole de sensualité indépendante, d'impénétrabilité psychique ou de désirs latents de mystère.",
+    advice: "Cultivez votre côté réceptif. Prenez du temps pour le silence et fiez-vous à votre première impression."
+  },
+  {
+    symbol: "Maison",
+    category: "Lieux",
+    meaning: "La maison représente l'architecture globale de votre vie mentale complexe (votre Soi). La façade est votre personnalité publique (la Persona), la cave figure le subconscient profond, et le grenier représente l'intellect ou les aspirations spirituelles supérieures.",
+    jung: "C'est l'image par excellence de l'unité psychologique. Découvrir de nouvelles pièces inconnues signifie révéler en soi de nouvelles aptitudes latentes.",
+    freud: "Représentation du corps propre ou des désirs d'intimité et de protection de l'ego.",
+    advice: "Quelle pièce de la maison visitiez-vous ? S'il s'agissait du sous-sol, vous êtes invité à explorer vos mémoires cachées."
+  },
+  {
+    symbol: "Voiture",
+    category: "Objets & Véhicules",
+    meaning: "La voiture symbolise votre véhicule existentiel, la façon dont vous pilotez votre quotidien, assumez l'autonomie et dirigez vos choix. Elle montre comment vous négociez votre place sociale et matérielle.",
+    jung: "Représentation de la Persona et de l'adaptation extérieure. Perdre le contrôle du volant ou faire face à une panne signale que vous essayez d'imposer un contrôle autoritaire et artificiel au lieu de suivre les flux naturels du subconscient.",
+    freud: "Expression de l'ambition d'auto-détermination, du besoin de contrôle ou des pulsions de puissance et d'indépendance matérielle.",
+    advice: "Prenez-vous vous-même le volant de vos initiatives, ou laissez-vous d'autres forces (conjoint, famille, pression sociale) conduire vos choix à votre place ?"
+  },
+  {
+    symbol: "Araignée",
+    category: "Animaux & Nature",
+    meaning: "L'araignée tisse sa toile avec patience et précision, ce qui symbolise le destin, l'autosuffisance, mais aussi le piège et l'emprise inconsciente. Rêver d'une araignée peut indiquer un sentiment d'être piégé dans une situation complexe ou sous l'emprise de quelqu'un.",
+    jung: "Représente souvent l'archétype de la Grande Mère dévorante ou les aspects de l'inconscient qui tissent les fils du destin sans que le Moi n'en ait conscience.",
+    freud: "Manifestation d'une figure maternelle castratrice ou de peurs associées à l'intimité pulsionnelle jugée dangereuse.",
+    advice: "Observez si vous tissez sereinement vos projets comme une toile, ou si vous vous sentez pris au piège par une dynamique relationnelle étouffante."
+  },
+  {
+    symbol: "Feu",
+    category: "Éléments",
+    meaning: "Le feu symbolise une énergie de transformation radicale, de destruction purificatrice mais aussi de passion ardente. S'il est maîtrisé (cheminée), il représente la chaleur et le foyer ; hors de contrôle (incendie), il incarne la colère destructrice, la passion dévorante ou l'épuisement.",
+    jung: "Énergie psychique brute (la libido dans un sens large) en pleine mutation. Le feu détruit l'ancien pour régénérer le nouveau.",
+    freud: "Expression des pulsions sexuelles brûlantes, de la passion impatiente ou des désirs interdits qui exigent d'être consumés.",
+    advice: "Canalisiez-vous cette flamme pour réchauffer vos projets, ou menace-t-elle d'enflammer vos relations par excès d'impulsivité ?"
+  },
+  {
+    symbol: "Sang",
+    category: "Corps humain",
+    meaning: "Le sang est la sève vitale par excellence. Le voir couler indique une perte d'énergie psychique, une blessure émotionnelle récente, ou une grande sensibilité. Il symbolise également les passions intenses, les liens familiaux ou les sacrifices nécessaires.",
+    jung: "Symbolise l'anima, l'énergie vitale libérée de manière inconsciente, ou le sacrifice nécessaire pour accéder à une conscience supérieure.",
+    freud: "Lié aux pulsions physiques primaires, à la vitalité organique intrinsèque, au traumatisme ou à la culpabilité inconsciente.",
+    advice: "Où perdez-vous votre vitalité dans votre quotidien ? Ce rêve est un appel urgent à soigner vos blessures affectives et à protéger votre énergie personnelle."
+  },
+  {
+    symbol: "Forêt",
+    category: "Lieux",
+    meaning: "La forêt dense, sauvage ou obscure représente le subconscient mystérieux où résident nos peurs inconscientes et nos potentiels cachés. S'y perdre évoque une période de transition confuse, de désorientation où les anciens repères ne fonctionnent plus.",
+    jung: "C'est le symbole même de l'inconscient. S'y aventurer correspond à l'étape initiale du voyage héroïque d'auto-découverte (l'Individuation).",
+    freud: "Reflet des désirs obscurs refoulés et de la fertilité psychique originelle qui échappe à la censure du Surmoi.",
+    advice: "Rejetez la panique de l'égarement. La forêt vous invite à vous reconquérir en explorant vos potentiels restés inexploités."
+  },
+  {
+    symbol: "Argent",
+    category: "Objets & Véhicules",
+    meaning: "L'argent en rêve représente moins de la richesse financière que votre propre valeur personnelle, votre estime de soi, votre potentiel créateur ou votre énergie disponible. En perdre révèle un manque de confiance, tandis qu'en trouver indique un gain de vitalité psychologique.",
+    jung: "Symbolise la valeur psychique interne, l'investissement de l'énergie (la libido) dans des aspects constructifs de l'existence.",
+    freud: "Souvent corrélé aux pulsions de contrôle, à l'avarice émotionnelle ou au désir de possession infantile.",
+    advice: "Valorisez-vous suffisamment vos talents uniques ? L'abondance commence par la reconnaissance sincère de votre propre valeur intrinsèque."
+  },
+  {
+    symbol: "Lune",
+    category: "Éléments",
+    meaning: "La lune gouverne la nuit, les vagues et l'invisible. Elle incarne l'inconscient réceptif, l'intuition poétique, les cycles changeants de l'humeur et la part de mystère nocturne de notre psychologie.",
+    jung: "Archétype de l'Anima universelle, de la réceptivité mystique et de l'aspect irrationnel mais sage de l'esprit féminin profond.",
+    freud: "Représentation symbolique de la maman, des désirs de retour au cocon de la petite enfance ou à l'intimité protectrice.",
+    advice: "Acceptez les phases de votre propre sensibilité. Tout comme la lune, vous traversez des cycles d'ombre et de lumière nécessaires à votre équilibre."
+  },
+  {
+    symbol: "Soleil",
+    category: "Éléments",
+    meaning: "Le soleil illumine et clarifie tout sur son passage. C'est le symbole de la conscience éveillée, de la clarté d'esprit, de la vérité éclatante et de l'énergie créatrice vive. Un soleil radieux présage de l'harmonie et d'un alignement intérieur fort.",
+    jung: "Symbole du Soi unifié ou de la conscience triomphant des ténèbres de l'inconscient primaire (victoire du conscient).",
+    freud: "Image paternelle d'autorité bienveillante ou désir d'affirmation de puissance et d'idéalisation du Moi.",
+    advice: "C'est le moment d'exprimer pleinement votre vérité au grand jour avec courage, générosité et authenticité."
+  },
+  {
+    symbol: "Pont",
+    category: "Lieux",
+    meaning: "Traverser un pont indique une transition décisive d'une étape de vie à une autre (changement de carrière, de relation, d'état d'esprit). Si le pont est fragile, la transition suscite une grande peur face à l'inconnu.",
+    jung: "Le pont est l'archétype de la liaison entre le conscient et l'inconscient, facilitant l'intégration des contraires psychologiques.",
+    freud: "Symbole de passage initiatique, fréquemment associé à l'évolution de la maturité sexuelle ou au franchissement d'un interdit moral.",
+    advice: "N'ayez pas peur de laisser la rive familière derrière vous. Le chemin devant vous est porteur de renouveau psychologique."
+  },
+  {
+    symbol: "Miroir",
+    category: "Objets & Véhicules",
+    meaning: "Se regarder dans un miroir représente l'auto-évaluation et la confrontation directe avec sa propre image. Un miroir brisé ou déformé signale une crise d'identité ou une perception de soi fragmentée ou trompeuse.",
+    jung: "Confrontation capitale avec l'Ombre personnelle (ce que l'on refuse de voir en soi) ou révélation de notre véritable essence au-delà des faux-semblants.",
+    freud: "Reflet du narcissisme inconscient, de l'idéalisation du Moi ou de la culpabilité face au regard d'autrui (le Surmoi).",
+    advice: "Regardez-vous sans jugement ni fard. Soyez honnête envers vos forces et vos imperfections pour cultiver une acceptation authentique."
+  },
+  {
+    symbol: "Porte",
+    category: "Lieux",
+    meaning: "Une porte fermée symbolise des obstacles transitoires ou des secrets bien gardés. Une porte ouverte invite à explorer de nouvelles possibilités existentielles ou à accueillir de nouveaux pans de votre vie affective.",
+    jung: "Le seuil d'accès à l'inconscient. Franchir une porte représente l'accès à un niveau supérieur de conscience de soi.",
+    freud: "Souvent interprétée comme un symbole d'accès à l'intimité corporelle ou de libération de désirs refoulés.",
+    advice: "Si la porte est fermée à clef, cherchez en vous la clef de votre autonomie émotionnelle plutôt que de forcer le passage extérieurement."
+  },
+  {
+    symbol: "Labyrinthe",
+    category: "Lieux",
+    meaning: "Le labyrinthe représente la confusion mentale, l'errance existentielle ou la sensation de tourner en rond face à un choix complexe qui nous dépasse. C'est l'illustration de la recherche d'une issue au milieu d'idées contradictoires.",
+    jung: "Le chemin sinueux mais hautement structuré vers le centre de soi (le Soi). C'est un parcours d'initiation indispensable.",
+    freud: "Traduit l'angoisse de s'égarer au milieu de pulsions inavouables ou d'un conflit intérieur insoluble pour la raison consciente.",
+    advice: "Cessez de chercher une issue purement logique. Parfois, il faut s'arrêter et écouter l'intuition pure pour trouver le fil d'Ariane qui mène à la clarté."
+  },
+  {
+    symbol: "Chien",
+    category: "Animaux & Nature",
+    meaning: "Rêver d'un chien reflète le domaine de la fidélité, de l'instinct de protection, de la dévotion et des amitiés sincères. Un chien agressif trahit un conflit intérieur avec vos propres colères instinctives ou un sentiment de trahison extérieure.",
+    jung: "Représente le guide psychopompe, le compagnon fidèle de l'inconscient qui veille sur le Moi lors de ses voyages nocturnes.",
+    freud: "Symbole des pulsions instinctives domestiquées et adaptées, ou de la soumission affectueuse aux lois morales.",
+    advice: "Prenez soin de vos relations de confiance. Veillez également à ne pas ignorer vos instincts protecteurs s'ils vous alertent."
+  },
+  {
+    symbol: "Prison",
+    category: "Lieux",
+    meaning: "Rêver d'emprisonnement dénote un profond sentiment de limitation, de culpabilité envers soi-même ou de blocage imposé par des croyances rigides, le travail ou une dynamique relationnelle toxique.",
+    jung: "L'enfermement du Moi dans une structure psychique sclérosée (comme un excès de rigorisme intellectuel), l'esprit réclamant sa libération.",
+    freud: "Symbole de la censure implacable exercée par le Surmoi moral sur les désirs profonds de l'individu.",
+    advice: "Quelles sont les barrières invisibles que vous érigez vous-même autour de vos rêves ? Vous possédez déjà la clef de votre propre cellule."
+  },
+  {
+    symbol: "Train",
+    category: "Objets & Véhicules",
+    meaning: "Le train exprime une trajectoire de vie collective, le destin partagé et la conformité au rythme de la société. Rater son train exprime la peur de laisser passer une opportunité cruciale ou de ne pas être dans les temps de ses ambitions.",
+    jung: "Représentation du conditionnement social de la Persona et du parcours linéaire tracé par la collectivité plutôt que par l'individuation singulière.",
+    freud: "Symbole de l'élan d'ambition mécanique et de la hâte de concrétiser ses désirs au sein d'une organisation brute.",
+    advice: "Suivez-vous aveuglément des rails tracés par d'autres ou osez-vous bifurquer vers des sentiers de traverse plus personnels ?"
+  },
+  {
+    symbol: "Oiseau",
+    category: "Animaux & Nature",
+    meaning: "L'oiseau incarne l'aspiration à la liberté, la légèreté de l'être et la communication spirituelle ou intellectuelle. Un oiseau en plein vol symbolise des idées élevées ou des désirs d'évasion, tandis qu'un oiseau en cage reflete un profond sentiment de frustration matérielle.",
+    jung: "Représente les pensées intuitives libres, les messagers de l'inconscient actif (anima/animus sous forme céleste ou ailée).",
+    freud: "Souvent connecté à des désirs de liberté corporelle ou à des fantasmes enfantins d'élévabilité.",
+    advice: "Quel message ou sensation l'oiseau semblait-il vous apporter ? C'est le moment de libérer vos pensées créatrices les plus audacieuses."
+  },
+  {
+    symbol: "Lion",
+    category: "Animaux & Nature",
+    meaning: "Le lion représente la force souveraine, la puissance royale maîtrisée, le courage fier, mais aussi l'orgueil excessif ou une colère dévorante. Il symbolise le besoin affirmé de se faire respecter ou de dominer.",
+    jung: "Représente les forces instinctives intenses du Soi, l'affirmation de la volonté solaire et l'énergie archétypale maîtresse du conscient.",
+    freud: "Symbole d'une figure d'autorité paternelle écrasante ou d'une puissance libidinale brute exigeant d'être reconnue.",
+    advice: "Faites face à votre propre puissance intérieure avec noblesse et justice plutôt qu'avec une agressivité mal ciblée."
+  },
+  {
+    symbol: "Loup",
+    category: "Animaux & Nature",
+    meaning: "Le loup évoque l'instinct sauvage, la fidélité étroite au clan (meute) ou la crainte profonde de l'isolement. Rêver d'un loup exprime une confrontation directe à des aspects de soi jugés féroces, indomptables ou marginaux.",
+    jung: "Archétype de l'Ombre sauvage innée, représentant nos instincts ancestraux les plus instinctifs encore préservés du filtre social.",
+    freud: "Lié à des peurs d'enfance archaïques (la menace terrifiante du prédateur) ou à des pulsions agressives refoulées.",
+    advice: "Apprivoisez votre part d'indépendance sauvage au lieu de la craindre de manière irraisonnée. Elle protège votre territoire."
+  },
+  {
+    symbol: "Poisson",
+    category: "Animaux & Nature",
+    meaning: "Vivant dans le secret des profondeurs aquatiques, le poisson symbolise les contenus fluides et insaisissables du subconscient, l'inspiration psychique féconde ou les vérités mémorielles enfouies.",
+    jung: "Symbole du Soi émergeant des profondeurs fertiles du subconscient collectif, porteur d'une nourriture spirituelle insoupçonnée.",
+    freud: "Souvent en lien avec les symboles de fécondité intime ou de désirs instinctifs profondément immergés.",
+    advice: "Plongez sans crainte dans vos sentiments profonds pour y pêcher des révélations créatrices majeures."
+  },
+  {
+    symbol: "Cheval",
+    category: "Animaux & Nature",
+    meaning: "Le cheval incarne la liberté de mouvement, la fougue naturelle, l'énergie vitale instinctive puissante et le moteur d'action quotidien. Son obéissance ou son indocilité montre le rapport entretenu avec ses pulsions directes.",
+    jung: "Représentation dynamique de la part animale noble, vigoureuse et porteuse de l'être humain (la libido positive).",
+    freud: "Expression intense de la force physique corporelle, des désirs instinctifs ou des pulsions impatientes de l'organisme.",
+    advice: "Êtes-vous en parfaite harmonie avec votre monture ? Apprenez à guider vos élans sans jamais chercher à les réprimer indûment."
+  },
+  {
+    symbol: "Fleurs",
+    category: "Animaux & Nature",
+    meaning: "Les fleurs symbolisent la floraison de la personnalité consciente, la délicatesse des sentiments, la beauté éphémère et le potentiel de création pacifique qui s'éveille.",
+    jung: "Symbole pur de la renaissance de l'âme réceptrice, de la floraison de l'individuation et de l'harmonie psychologique retrouvée.",
+    freud: "Expression symbolique directe de la sensualité naturelle, des sentiments d'attachement naissants et de la fragilité affective.",
+    advice: "Permettez à vos talents uniques de s'ouvrir doucement au grand jour. Prenez un soin méticuleux de vos jardins secrets."
+  },
+  {
+    symbol: "Montagne",
+    category: "Lieux",
+    meaning: "La montagne représente l'effort d'élévation spirituelle, la recherche d'objectifs élevés, la solitude paisible, ou d'imposants défis de vie qui exigent de la rigueur.",
+    jung: "Archétype de l'ascension sacrée vers un palier supérieur de conscience, le sommet incarnant le Soi réalisé au-dessus du monde ordinaire.",
+    freud: "Symbole de la conquête d'une fière autonomie personnelle, des enjeux de puissance ou de l'affirmation de soi.",
+    advice: "L'ascension d'une montagne demande de la constance. Avancez régulièrement et n'ayez pas peur des froids d'altitude."
+  },
+  {
+    symbol: "Désert",
+    category: "Lieux",
+    meaning: "Le désert symbolise le grand vide, le sentiment de sécheresse émotionnelle transitoire, mais aussi l'espace sacré de la purification, du dépouillement salutaire et des révélations indispensables.",
+    jung: "Lieu de la grande traversée initiatique, de la mise à l'épreuve du Moi confronté au divin ou au vide du Soi.",
+    freud: "Reflet douloureux d'un sentiment d'abandon affectif marquant ou d'une absence persistante d'investissement sentimental.",
+    advice: "Accueillez cette période de dépouillement comme une chance inestimable de désencombrer votre vie pour ne garder que l'essentiel."
+  },
+  {
+    symbol: "Île",
+    category: "Lieux",
+    meaning: "L'île figure l'isolement volontaire, le sentiment d'autarcie totale, l'indépendance jalousement gardée, mais aussi un refuge précieux face au tumulte social.",
+    jung: "Une zone claire de conscience isolée s'exondant hors des eaux profondes et chaotiques de l'inconscient collectif.",
+    freud: "Désir d'un retour pacifié au giron préservé, loin de l'oppression extérieure ou de la foule envahissante.",
+    advice: "Prenez-vous une distance sereine pour mieux vous ressourcer, ou êtes-vous en train de vous murer dans une solitude excessive ?"
+  },
+  {
+    symbol: "Château",
+    category: "Lieux",
+    meaning: "Le château fortifié figure une construction mentale de haut prestige, des réussites passées solides, mais peut aussi symboliser une tendance à s'enfermer dans son orgueil ou des défenses intellectuelles trop rigides.",
+    jung: "Représente la protection robuste de la Persona ou des remparts du Moi contre le harcèlement extérieur ou intérieur.",
+    freud: "Désir marqué d'identification à des structures d'autorité parentales idéalisées ou de puissance.",
+    advice: "Abaissez de temps à autre vos ponts-levis : ne laissez pas vos structures de protection se métamorphoser en cachot."
+  },
+  {
+    symbol: "Cimetière",
+    category: "Lieux",
+    meaning: "Le cimetière n'est pas de nature funeste dans le rêve ; il symbolise le lieu du deuil accompli, des vieux souvenirs acceptés, de la fin définitive de comportements obsolètes et du besoin de recueillement tranquille.",
+    jung: "L'espace psychologique de transmutation où sont déposés les anciens schémas d'existence afin que la conscience puisse se réincarner.",
+    freud: "Reflet des regrets mélancoliques, d'anciennes culpabilités refoulées ou de la crainte intime du déclin.",
+    advice: "Honorez brièvement vos anciens échecs pour mieux les laisser reposer. Tournez vos yeux vers les nouveaux départs."
+  },
+  {
+    symbol: "Tempête",
+    category: "Éléments",
+    meaning: "La tempête, l'ouragan ou les foudres expriment un tumulte passionnel intense, des tensions affectives majeures ou des forces inconscientes violentes menaçant d'emporter vos certitudes terrestres.",
+    jung: "Conflit d'une grande intensité psychique libérant brutalement les énergies refoulées afin de modifier l'attitude trop figée du Moi.",
+    freud: "Expression explosive de pulsions agressives ou de colères vives longtemps retenues sous le contrôle du Surmoi.",
+    advice: "Ne tentez pas d'affronter l'ouragan par la seule force mentale rigide. Pliez avec souplesse et attendez la nécessaire accalmie."
+  },
+  {
+    symbol: "Terre",
+    category: "Éléments",
+    meaning: "La terre évoque l'ancrage matériel, la stabilité vitale, la fertilité, la vitesse créatrice et le principe de réalité concret. S'y embourber signale des entraves, tandis qu'une terre meuble annonce des cultures fertiles.",
+    jung: "La Mère primordiale qui nourrit, offre de l'assise et rappelle à la conscience son enracinement biologique vital.",
+    freud: "Pulsions d'auto-préservation, de sécurité de possession matérielle ou de recherche d'une sécurité parentale protectrice.",
+    advice: "Il est temps de poser des actions pragmatiques et concrètes. Mettez de l'ordre dans vos affaires immédiates et prenez soin de vous."
+  },
+  {
+    symbol: "Boue",
+    category: "Éléments",
+    meaning: "La boue évoque des hésitations, des doutes paralysants, de la confusion, mais s'avère également la matière de base fertile qu'il faut accepter de travailler pour faire éclore de nouvelles vérités.",
+    jung: "La 'prima materia' de l'alchimiste psychique : le matériau frustre et informe d'où l'or spirituel doit émerger par introspection.",
+    freud: "Lié à des fixations enfantines, à des sentiments intimes d'impureté morale ou à des culpabilités diffuses.",
+    advice: "Ne considérez pas la confusion comme un échec. C'est en malaxant courageusement ces doutes que vous forgerez votre sagesse."
+  },
+  {
+    symbol: "Obscurité",
+    category: "Éléments",
+    meaning: "L'obscurité totale ou la nuit noire symbolise le mystère absolu, ce qui est caché à la raison claire, les craintes irrationnelles et la confrontation à l'inconnu absolu.",
+    jung: "Plongée forcée dans le dictionnaire infini du subconscient collectif, là où toutes les formes potentielles dorment encore.",
+    freud: "Sensation d'égarement de l'ego devant les passions libidinales brutes dénuées de repères éthiques clairs.",
+    advice: "Ne paniquez pas face à ce manque temporaire de visibilité. Laissez vos yeux s'adapter et fiez-vous au discernement de votre intuition."
+  },
+  {
+    symbol: "Cheveux",
+    category: "Corps humain",
+    meaning: "Les cheveux portent la force vitale créative, l'attrait de la séduction, la liberté d'expression et la puissance de pensée. Les voir coupés exprime une rupture de vie, et leur perte évoque une profonde lassitude.",
+    jung: "Représente la pensée créatrice inspirée, l'énergie rayonnante de nos archétypes instinctifs fondamentaux.",
+    freud: "Attribut de séduction charnelle évident, fortement en lien avec la puissance physique et l'angoisse de privation.",
+    advice: "Si vous vous sentez affaibli mentalement ou fatigué, prenez du temps pour recharger vos batteries spirituelles."
+  },
+  {
+    symbol: "Mains",
+    category: "Corps humain",
+    meaning: "Les mains représentent notre capacité d'agir, de façonner notre environnement, de donner, de guérir ou au contraire de refermer notre emprise sur les choses et les gens.",
+    jung: "L'instrument noble de réalisation du Soi dans le plan matériel, symbole de l'action délibérée et créatrice de la conscience.",
+    freud: "Reliées aux désirs charnels touchant la possession concrète, l'intimité ou la préservation agressive.",
+    advice: "Regardez l'attitude de vos mains en rêve : traduisent-elles un besoin d'agir énergiquement, d'offrir ou de relâcher une emprise pesante ?"
+  },
+  {
+    symbol: "Yeux",
+    category: "Corps humain",
+    meaning: "Les yeux sont les fenêtres de l'âme et de la lucidité. Être incapable d'ouvrir les paupières exprime un refus inconscient de regarder une vérité en face.",
+    jung: "Le foyer supérieur de la vision intérieure et de la conscience de soi objective, libérée des faux-semblants ordinaires.",
+    freud: "Associés au désir de voir ou d'être admiré, au respect ou à l'angoisse panique de la surveillance morale.",
+    advice: "Osez regarder votre quotidien bien en face, sans fuite ni complaisance. Votre réalité quotidienne est votre meilleur guide, car la vérité libère."
+  },
+  {
+    symbol: "Cœur",
+    category: "Corps humain",
+    meaning: "Le cœur symbolise l'intelligence émotionnelle supérieure, le courage de s'engager, la passion sincère et la source d'amour qui sommeille en chaque individu.",
+    jung: "Le centre vibrant de l'Anima qui guide l'être humain vers une écoute attentive de sa fonction sentiment, équilibrant l'intellect.",
+    freud: "Expression directe des attachements fusionnels infantiles ou des pulsions de réunion amoureuse.",
+    advice: "Cessez de régler votre vie sur les seuls impératifs rationnels. Laissez un espace de parole légitime à votre cœur."
+  },
+  {
+    symbol: "Clef",
+    category: "Objets & Véhicules",
+    meaning: "La clef ouvre les portes du savoir enfoui, apporte une solution soudaine à un dilemme majeur ou marque l'entrée en possession de sa propre autorité morale.",
+    jung: "L'insight libérateur par excellence qui éclaire un pan entier d'une impasse psychologique par décryptage de l'inconscient.",
+    freud: "Symbole d'introduction ou d'autorisation d'accès aux mystères physiques occultés de l'intimité.",
+    advice: "Une solution est sur le point de se révéler à vous. Faites confiance à votre logique et à votre instinct pour trouver la bonne serrure."
+  },
+  {
+    symbol: "Livre",
+    category: "Objets & Véhicules",
+    meaning: "Le livre exprime la quête de sens, l'histoire personnelle consignée par la mémoire et les clés du savoir traditionnel. Un livre poussiéreux indique un passé enfoui dont les enseignements sont oubliés.",
+    jung: "Les archives sacrées de votre propre parcours d'individuation spirituelle, reprenant les thèmes de l'inconscient collectif.",
+    freud: "Relève de l'éducation reçue, des interdits moraux écrits par l'autorité parentale ou des secrets transgénérationnels.",
+    advice: "Prenez le temps d'analyser froidement les leçons de votre passé. Vous êtes l'auteur souverain du chapitre qui commence."
+  },
+  {
+    symbol: "Montre",
+    category: "Objets & Véhicules",
+    meaning: "L'horloge, le cadran ou la montre rappellent au rêveur la fuite du temps, l'imminence d'une échéance morale importante ou des inquiétudes face au vieillissement.",
+    jung: "Le besoin pressant d'organiser le chaos de la vie à travers une structure protectrice ordonnée (mandala temporel).",
+    freud: "Sens aigu de la contrainte morale sociale ou régulation interne des cycles physiologiques organiques.",
+    advice: "Ne laissez pas les aiguilles du temps dicter votre valeur personnelle. Apprenez à savourer l'instant présent sans culpabilité."
+  },
+  {
+    symbol: "Bateau",
+    category: "Objets & Véhicules",
+    meaning: "Le bateau est le symbole de notre navigation à travers les mers de l'émotivité inconsciente. Son état et la météo révèlent comment nous pilotons notre vie affective.",
+    jung: "Le Moi qui navigue courageusement sur l'océan de l'inconscient collectif, menant à bien le voyage de l'Individuation.",
+    freud: "Désir inconscient de sécurité maternelle par nostalgie du balancement protecteur de l'enfance.",
+    advice: "Prenez-vous soin de garder votre embarcation à flot ? Évacuez les regrets de votre cargaison pour alléger le voyage."
+  },
+  {
+    symbol: "Téléphone",
+    category: "Objets & Véhicules",
+    meaning: "Le téléphone représente la communication et l'échange. Des pannes ou un mauvais numéro indiquent de sérieuses difficultés à exprimer sa vérité ou à être entendu par autrui.",
+    jung: "Un canal de communication direct entre le conscient rationnel et des instances ignorées du subconscient (Ombre, Anima).",
+    freud: "Désir de maintenir une présence charnelle virtuelle ou de raviver d'anciens liens affectifs interrompus.",
+    advice: "Exprimez vos non-dits avec clarté. N'attendez pas que les autres devinent vos besoins intimes sans que vous ne les formuliez."
+  },
+  {
+    symbol: "Fuir",
+    category: "Mouvements & Actions",
+    meaning: "Courir pour fuir un agresseur ou un monstre exprime l'évitement d'une situation douloureuse, la peur intense de l'avenir ou le refus obstiné de regarder ses propres émotions en face.",
+    jung: "Ce qui vous poursuit dans le rêve est souvent un aspect resté inconscient ou refoulé d'ordinaire (l'Ombre) qui exige d'être réintégré et écouté.",
+    freud: "Défense désespérée face à des pulsions intimes jugées inacceptables qui tentent de déborder les barrières éthiques.",
+    advice: "Arrêtez votre course, retournez-vous et faites face avec calme. Vous constaterez que votre agresseur onirique est le reflet d'une force intérieure."
+  },
+  {
+    symbol: "Nager",
+    category: "Mouvements & Actions",
+    meaning: "Nager avec aisance dans l'eau claire symbolise une excellente maîtrise de vos émotions et une fluidité sereine dans vos choix de vie réels. Lutter exprime un sentiment d'être submergé.",
+    jung: "Infiltration maîtrisée et salutaire du Moi conscient dans la psyché inconsciente sans risquer de s'y dissoudre.",
+    freud: "Nostalgie des plaisirs de portance de la période prénatale ou joie sensorielle d'harmonie charnelle.",
+    advice: "Laissez-vous porter de temps à autre par les événements. La confiance en la vie est votre meilleur bouclier contre l'angoisse."
+  },
+  {
+    symbol: "Mariage",
+    category: "Événements de vie",
+    meaning: "Le mariage représente une alliance sacrée en soi, la réconciliation harmonieuse de forces contraires, ou un engagement passionné envers un projet créatif majeur.",
+    jung: "La Hiérogamie sacrée : l'union féconde des deux grands pôles psychologiques internes, le masculin (Animus) et le féminin (Anima).",
+    freud: "Attachement charnel intense, désir de sécurité affective suprême et d'approbation des unions par l'entourage moral.",
+    advice: "Honorez cette union intérieure sacrée en équilibrant quotidiennement votre esprit d'analyse logique et votre créativité sensible."
+  },
+  {
+    symbol: "Examen",
+    category: "Événements de vie",
+    meaning: "Arriver en retard ou échouer à un test onirique trahit la peur lancinante de l'échec, l'anxiété de performance sociale aiguë ou le syndrome de l'imposteur.",
+    jung: "La tension subie par le Moi face aux critères tyranniques imposés par l'adaptation sociale de la Persona.",
+    freud: "Sévérité sans complaisance exercée par le Surmoi moral qui exige constamment d'être parfait, sous menace d'auto-punition.",
+    advice: "Vous êtes plus exigeant envers vous-même que n'importe qui d'autre. Offrez-vous davantage de mansuétude ; l'évaluation suprême n'existe pas."
+  },
+  {
+    symbol: "Voyage",
+    category: "Événements de vie",
+    meaning: "Le voyage correspond au mouvement de la vie en constante mutation. Il symbolise le renouveau, les aspirations de liberté, ou l'exploration de nouvelles facettes de son être.",
+    jung: "Le chemin d'individuation par excellence, cette odyssée sublime où l'esprit part à la conquête de sa propre totalité.",
+    freud: "Désir d'émancipation de la sphère d'autorité familiale historique ou recherche d'aventures sentimentales stimulantes.",
+    advice: "Le but n'est pas le refuge final, mais la qualité de l'attention que vous portez aux paysages de l'aventure quotidienne."
+  }
+];

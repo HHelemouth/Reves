@@ -1,92 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  
-  --color-main-bg: #FCFCFC;
-  --color-deep-ink: #1A1A1A;
-  --color-mid-gray: #5C5C5C;
-  --color-sage: #2A5C5A;
-  --color-coral: #E85D3A;
-  --color-ochre: #E6B85C;
+@layer utilities {
+  .dream-h1 {
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+  }
 }
 
-body {
-  @apply bg-main-bg text-deep-ink font-sans antialiased overflow-x-hidden;
-}
-
-.dream-card {
-  @apply bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] border border-black/[0.04] p-6 transition-all duration-300;
-}
-
-.dream-h1 {
-  @apply font-medium tracking-[-0.5px] text-deep-ink;
-}
-
-.interpretation-text {
-  @apply text-lg leading-relaxed font-medium text-deep-ink;
-}
-
-.reflection-item {
-  @apply flex items-start space-x-3 text-mid-gray;
-}
-
-.source-link {
-  @apply text-xs text-mid-gray/60 hover:text-deep-ink transition-colors;
-}
-
-/* Background Elements */
-.bg-blob-coral {
-  background: radial-gradient(circle, rgba(232,93,58,0.08) 0%, transparent 70%);
-  width: 600px;
-  height: 600px;
-  position: fixed;
-  top: -200px;
-  right: -100px;
-  z-index: -10;
-  pointer-events: none;
-}
-
-.bg-bar-sage {
-  background: linear-gradient(135deg, rgba(42,92,90,0.08) 0%, transparent 100%);
-  height: 200px;
-  width: 100%;
-  position: fixed;
-  bottom: 100px;
-  left: -20%;
-  transform: skewY(-2deg);
-  z-index: -10;
-  pointer-events: none;
-}
-
-.bg-rect-ochre {
-  background-color: var(--color-ochre);
-  opacity: 0.06;
-  width: 100px;
-  height: 150px;
-  position: fixed;
-  bottom: 50px;
-  right: 50px;
-  border-radius: 4px;
-  z-index: -10;
-  pointer-events: none;
-}
-
-/* Custom button */
-.btn-primary {
-  @apply flex items-center space-x-2 px-8 py-3 bg-deep-ink text-white rounded-full font-medium hover:bg-sage transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
-}
-
-/* Custom scrollbar */
+/* Custom transitions and scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
-
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background: #FAF9F5; /* warm paper background */
 }
-
 ::-webkit-scrollbar-thumb {
-  @apply bg-deep-ink/10 rounded-full hover:bg-deep-ink/20;
+  background: #E5E2D9; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D5D1C5;
 }

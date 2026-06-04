@@ -1,0 +1,44 @@
+{
+  "entities": {
+    "Dream": {
+      "title": "Dream",
+      "description": "A recorded dream.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who recorded the dream."
+        },
+        "content": {
+          "type": "string",
+          "description": "The dream content."
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date/time the dream was recorded."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the dream."
+        },
+        "interpretation": {
+          "type": "string",
+          "description": "The interpretation of the dream."
+        }
+      },
+      "required": [
+        "userId",
+        "content",
+        "date",
+        "title"
+      ]
+    }
+  },
+  "firestore": {
+    "dreams/{dreamId}": {
+      "schema": "Dream",
+      "description": "Collection of recorded dreams."
+    }
+  }
+}

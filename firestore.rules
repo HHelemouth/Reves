@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+
+    match /dreams/{dreamId} {
+      // Validation Schema for dream
+      function isValidDream(data) {
+        return data.userId is string &&
+               data.content is string &&
+               data.content.size() <= 100000 &&
+               data.title is string &&
+               data.title.size() <= 200 &&
+               data.interpretation is string &&
+               data.interpretation.size() <= 100000 &&
+               data.date is string;
+      }
+
+      allow create: if isSignedIn() &&
+                     isValidDream(request.resource.data) &&
+                     isOwner(request.resource.data.userId);
+
+      allow list: if isSignedIn() &&
+                     resource.data.userId == request.auth.uid;
+
+      allow get: if isSignedIn() &&
+                     resource.data.userId == request.auth.uid;
+
+      allow update: if isSignedIn() &&
+                       resource.data.userId == request.auth.uid &&
+                       request.resource.data.userId == resource.data.userId &&
+                       isValidDream(request.resource.data);
+    }
+  }
+}
