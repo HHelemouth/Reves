@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import { GoogleGenAI, Type } from '@google/genai';
 import path from 'path';
-import fs from 'fs';
 
 const app = express();
 app.use(cors());
@@ -41,68 +40,89 @@ app.post('/api/analyze-dream', async (req, res) => {
 
     const prompt = `Analyse le rêve suivant en tant que psychanalyste d'inspiration freudienne et jungienne. Donne une explication sobre, rigoureuse et analytique en français. Rêve: "${dreamText}"`;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
-      contents: prompt,
-      config: {
-        systemInstruction: "Tu es un psychanalyste érudit, sobre, neutre et profondément accessible, expert de Carl Jung et Sigmund Freud. Tu parles uniquement en français. Tu ne parles JAMAIS à la deuxième personne du singulier (tutoiement exclu : pas de 'tu', 'toi', 'ton', 'tes'). Tu dois être détaché et objectif en parlant 'du rêve' ou 'du rêveur' à la troisième personne, plutôt que d'interpeller directement la personne. Évite absolument tout ton pompeux, jargon abscons ou théâtral. Tes explications doivent être concrètes, humbles, simples et immédiatement parlantes, en liant directement les images oniriques à des pistes de questionnement réelles sur la vie éveillée.",
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            summary: { 
-              type: Type.STRING, 
-              description: "Résumé concis, parlant et simple de la dynamique d'esprit ou du conflit représenté dans le rêve. Analyse objective à la troisième personne, sans tutoiement." 
-            },
-            keyMessages: { 
-              type: Type.ARRAY, 
-              items: { type: Type.STRING },
-              description: "1 à 3 messages essentiels et concrets transmis par le subconscient, rédigés de manière neutre et détachée."
-            },
-            realLifeReflections: {
-              type: Type.ARRAY,
-              items: { type: Type.STRING },
-              description: "2 à 3 pistes de réflexion concrètes et ancrées dans la vie éveillée réelle du rêveur. Ce sont des questions ouvertes sans tutoiement, portant sur son quotidien (relations, travail, non-dits...) qu'il convient d'approfondir pour s'expliquer pourquoi ce rêve s'est produit."
-            },
-            symbols: {
-              type: Type.ARRAY,
-              items: {
-                type: Type.OBJECT,
-                properties: {
-                  term: { type: Type.STRING, description: "Nom du symbole extrait (ex: serpent, l'eau, chute...)" },
-                  meaning: { type: Type.STRING, description: "Signification ou résonance psychologique de ce symbole." }
-                },
-                required: ["term", "meaning"]
-              },
-              description: "Symboles notables extraits du rêve."
-            },
-            jungianReading: { 
-              type: Type.STRING, 
-              description: "Analyse approfondie selon la psychologie de Carl Jung (les archétypes, l'individuation, l'ombre, les contraires)." 
-            },
-            freudianReading: { 
-              type: Type.STRING, 
-              description: "Analyse approfondie selon la psychanalyse de Sigmund Freud (le masquage, désirs refoulés, contenu manifeste vs latent)." 
-            },
-            emotionScores: {
+    const config = {
+      systemInstruction: "Tu es un psychanalyste érudit, sobre, neutre et profondément accessible, expert de Carl Jung et Sigmund Freud. Tu parles uniquement en français. Tu ne parles JAMAIS à la deuxième personne du singulier (tutoiement exclu : pas de 'tu', 'toi', 'ton', 'tes'). Tu dois être détaché et objectif en parlant 'du rêve' ou 'du rêveur' à la troisième personne, plutôt que d'interpeller directement la personne. Évite absolument tout ton pompeux, jargon abscons ou théâtral. Tes explications doivent être concrètes, humbles, simples et immédiatement parlantes, en liant directement les images oniriques à des pistes de questionnement réelles sur la vie éveillée.",
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: Type.OBJECT,
+        properties: {
+          summary: { 
+            type: Type.STRING, 
+            description: "Résumé concis, parlant et simple de la dynamique d'esprit ou du conflit représenté dans le rêve. Analyse objective à la troisième personne, sans tutoiement." 
+          },
+          keyMessages: { 
+            type: Type.ARRAY, 
+            items: { type: Type.STRING },
+            description: "1 à 3 messages essentiels et concrets transmis par le subconscient, rédigés de manière neutre et détachée."
+          },
+          realLifeReflections: {
+            type: Type.ARRAY,
+            items: { type: Type.STRING },
+            description: "2 à 3 pistes de réflexion concrètes et ancrées dans la vie éveillée réelle du rêveur. Ce sont des questions ouvertes sans tutoiement, portant sur son quotidien (relations, travail, non-dits...) qu'il convient d'approfondir pour s'expliquer pourquoi ce rêve s'est produit."
+          },
+          symbols: {
+            type: Type.ARRAY,
+            items: {
               type: Type.OBJECT,
               properties: {
-                peur: { type: Type.INTEGER, description: "Intensité de la peur de 0 à 100." },
-                merveille: { type: Type.INTEGER, description: "Intensité de l'émerveillement ou mysticisme de 0 à 100." },
-                confusion: { type: Type.INTEGER, description: "Niveau d'incohérence ou de flou mental de 0 à 100." },
-                clarte: { type: Type.INTEGER, description: "Niveau de clarté ou de résolution intérieure de 0 à 100." }
+                term: { type: Type.STRING, description: "Nom du symbole extrait (ex: serpent, l'eau, chute...)" },
+                meaning: { type: Type.STRING, description: "Signification ou résonance psychologique de ce symbole." }
               },
-              required: ["peur", "merveille", "confusion", "clarte"]
+              required: ["term", "meaning"]
             },
-            journalPrompt: { 
-              type: Type.STRING, 
-              description: "Une question claire d'écriture intime pour le carnet de rêves." 
-            }
+            description: "Symboles notables extraits du rêve."
           },
-          required: ["summary", "keyMessages", "realLifeReflections", "symbols", "jungianReading", "freudianReading", "emotionScores", "journalPrompt"]
-        }
+          jungianReading: { 
+            type: Type.STRING, 
+            description: "Analyse approfondie selon la psychologie de Carl Jung (les archétypes, l'individuation, l'ombre, les contraires)." 
+          },
+          freudianReading: { 
+            type: Type.STRING, 
+            description: "Analyse approfondie selon la psychanalyse de Sigmund Freud (le masquage, désirs refoulés, contenu manifeste vs latent)." 
+          },
+          emotionScores: {
+            type: Type.OBJECT,
+            properties: {
+              peur: { type: Type.INTEGER, description: "Intensité de la peur de 0 à 100." },
+              merveille: { type: Type.INTEGER, description: "Intensité de l'émerveillement ou mysticisme de 0 à 100." },
+              confusion: { type: Type.INTEGER, description: "Niveau d'incohérence ou de flou mental de 0 à 100." },
+              clarte: { type: Type.INTEGER, description: "Niveau de clarté ou de résolution intérieure de 0 à 100." }
+            },
+            required: ["peur", "merveille", "confusion", "clarte"]
+          },
+          journalPrompt: { 
+            type: Type.STRING, 
+            description: "Une question claire d'écriture intime pour le carnet de rêves." 
+          }
+        },
+        required: ["summary", "keyMessages", "realLifeReflections", "symbols", "jungianReading", "freudianReading", "emotionScores", "journalPrompt"]
       }
-    });
+    };
+
+    let response;
+    try {
+      console.log("[Gemini] Tentative de génération avec gemini-3.5-flash...");
+      response = await ai.models.generateContent({
+        model: "gemini-3.5-flash",
+        contents: prompt,
+        config
+      });
+    } catch (err: any) {
+      console.warn("[Gemini] gemini-3.5-flash a échoué (haute demande ou indisponibilité), bascule sur gemini-2.5-flash. Erreur:", err.message || err);
+      try {
+        console.log("[Gemini] Tentative de génération avec gemini-2.5-flash...");
+        response = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: prompt,
+          config
+        });
+      } catch (fallbackErr: any) {
+        console.error("[Gemini] gemini-2.5-flash a également échoué. Erreur:", fallbackErr.message || fallbackErr);
+        console.warn("[Gemini] Utilisation du moteur de décryptage local hors-ligne en dernier recours.");
+        const mockedResponse = generateSmartFallback(dreamText);
+        return res.json(mockedResponse);
+      }
+    }
 
     const outputText = response.text;
     if (!outputText) {
@@ -113,8 +133,15 @@ app.post('/api/analyze-dream', async (req, res) => {
     return res.json(data);
 
   } catch (error: any) {
-    console.error("Erreur serveur:", error);
-    return res.status(500).json({ error: error.message || "Une erreur interne s'est produite lors de l'analyse." });
+    console.error("Erreur serveur finale lors de l'analyse:", error);
+    // Even if JSON parse fails, we fall back to a high-quality local response rather than throwing a raw 500 error!
+    try {
+      const { dreamText } = req.body;
+      const mockedResponse = generateSmartFallback(dreamText || "");
+      return res.json(mockedResponse);
+    } catch (innerErr) {
+      return res.status(500).json({ error: error.message || "Une erreur interne s'est produite lors de l'analyse." });
+    }
   }
 });
 
@@ -216,7 +243,7 @@ function generateSmartFallback(text: string) {
 
 async function startServer() {
   // Check environment to mount Vite or static build
-  const isProd = process.env.NODE_ENV === 'production' || fs.existsSync(path.join(process.cwd(), 'dist'));
+  const isProd = process.env.NODE_ENV === 'production';
 
   if (isProd) {
     const distPath = path.resolve(process.cwd(), 'dist');
@@ -236,8 +263,8 @@ async function startServer() {
   }
 
   const PORT = 3000;
-  app.listen(PORT, () => {
-    console.log(`[L'Interprète de Rêves] Serveur démarré sur http://localhost:${PORT}`);
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`[L'Interprète de Rêves] Serveur démarré sur http://0.0.0.0:${PORT}`);
   });
 }
 

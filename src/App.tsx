@@ -13,7 +13,7 @@ import {
   User as UserIcon,
   LogOut
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import Guide from './components/Guide.tsx';
 import { auth, db, handleFirestoreError, OperationType } from './lib/firebase.ts';
 import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, User } from 'firebase/auth';
@@ -77,6 +77,8 @@ export default function App() {
       const q = query(collection(db, 'dreams'), where('userId', '==', user.uid), orderBy('date', 'desc'));
       getDocs(q).then(snapshot => {
         setDreams(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      }).catch(err => {
+        console.error("Erreur lors du chargement des rêves de l'utilisateur:", err);
       });
     }
   }, [user]);
@@ -90,7 +92,9 @@ export default function App() {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser && pendingDream) {
-        handleSaveDream(pendingDream);
+        handleSaveDream(pendingDream).catch(err => {
+          console.error("Erreur de sauvegarde automatique après connexion:", err);
+        });
         setPendingDream(null);
       }
     });
@@ -137,7 +141,9 @@ export default function App() {
 
     if (!data.content || !data.interpretation) return;
 
-    if (!user) {
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
       setPendingDream(data);
       await handleSignIn();
       return;
@@ -145,11 +151,16 @@ export default function App() {
 
     try {
       await addDoc(collection(db, 'dreams'), {
-        userId: user.uid,
+        userId: currentUser.uid,
         ...data,
         date: new Date().toISOString()
       });
       alert('Rêve sauvegardé !');
+      
+      // Refresh the dreams list instantly
+      const q = query(collection(db, 'dreams'), where('userId', '==', currentUser.uid), orderBy('date', 'desc'));
+      const snapshot = await getDocs(q);
+      setDreams(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     } catch (error) {
       handleFirestoreError(error, OperationType.CREATE, 'dreams');
     }
@@ -880,8 +891,24 @@ export default function App() {
                ) : (
                  <div className="grid gap-4">
                    {dreams.filter(d => {
-                     const dateMatch = filterDate ? new Date(d.date).toLocaleDateString() === new Date(filterDate).toLocaleDateString() : true;
-                     const textMatch = filterKeyword ? (d.title.toLowerCase().includes(filterKeyword.toLowerCase()) || d.interpretation.toLowerCase().includes(filterKeyword.toLowerCase())) : true;
+                     let dateMatch = true;
+                     if (filterDate) {
+                       try {
+                         const dDate = d.date ? new Date(d.date) : null;
+                         const fDate = new Date(filterDate);
+                         dateMatch = (dDate && !isNaN(dDate.getTime())) ? dDate.toLocaleDateString() === fDate.toLocaleDateString() : false;
+                       } catch (e) {
+                         dateMatch = false;
+                       }
+                     }
+                     let textMatch = true;
+                     if (filterKeyword) {
+                       const kw = filterKeyword.toLowerCase();
+                       const titleStr = (d.title || '').toLowerCase();
+                       const interpStr = (d.interpretation || '').toLowerCase();
+                       const contentStr = (d.content || '').toLowerCase();
+                       textMatch = titleStr.includes(kw) || interpStr.includes(kw) || contentStr.includes(kw);
+                     }
                      return dateMatch && textMatch;
                    }).map((dream: any) => {
                      const isExpanded = expandedDreamId === dream.id;
@@ -895,8 +922,18 @@ export default function App() {
                        <div key={dream.id} className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
                          <div className="flex justify-between items-start cursor-pointer" onClick={() => setExpandedDreamId(isExpanded ? null : dream.id)}>
                            <div>
-                             <h3 className="text-lg font-medium text-stone-900">{dream.title}</h3>
-                             <p className="text-xs text-stone-500">{new Date(dream.date).toLocaleDateString()}</p>
+                             <h3 className="text-lg font-medium text-stone-900">{dream.title || "Rêve sans titre"}</h3>
+                             <p className="text-xs text-stone-500">
+                               {(() => {
+                                 if (!dream.date) return 'Date inconnue';
+                                 try {
+                                   const d = new Date(dream.date);
+                                   return isNaN(d.getTime()) ? 'Date inconnue' : d.toLocaleDateString();
+                                 } catch (e) {
+                                   return 'Date inconnue';
+                                 }
+                               })()}
+                             </p>
                            </div>
                            <div className="flex items-center gap-2">
                              <button className="text-xs text-rose-600 underline">
@@ -907,6 +944,10 @@ export default function App() {
                          </div>
                          {isExpanded && analysis && (
                            <div className="mt-4 pt-4 border-t border-stone-100 space-y-4">
+                              <div className="space-y-1">
+                                <h4 className="font-semibold text-stone-900">Rêve original</h4>
+                                <p className="text-stone-700 text-sm leading-relaxed whitespace-pre-wrap">{dream.content}</p>
+                              </div>
                               <h4 className="font-semibold text-stone-900">Synthèse</h4>
                               <p className="text-stone-700 text-sm leading-relaxed">{analysis.summary}</p>
                               
