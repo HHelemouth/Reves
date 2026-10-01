@@ -177,7 +177,7 @@ export default function App() {
   // Fetch dictionary from server
   useEffect(() => {
     // Tenter de charger d'abord d'immenses dictionnaires s'ils existent
-    fetch('/dictionnaire_reves.json')
+    fetch('/api/dictionnaire_reves.json')
       .then(res => {
         if (!res.ok) throw new Error("Accès impossible au dictionnaire personnalisé.");
         return res.json();
@@ -232,7 +232,7 @@ export default function App() {
       })
       .catch(() => {
         // Fallback standard si indisponible ou erreur
-        fetch('/dictionnaire_complet.json')
+        fetch('/api/dictionnaire_complet.json')
           .then(res => {
             if (!res.ok) throw new Error();
             return res.json();

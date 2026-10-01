@@ -241,6 +241,15 @@ function generateSmartFallback(text: string) {
   };
 }
 
+// Sert le dictionnaire uniquement via cette route, jamais en accès direct
+app.get('/api/dictionnaire_reves.json', (_req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'data/dictionnaire_reves.json'));
+});
+
+app.get('/api/dictionnaire_complet.json', (_req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'data/dictionnaire_complet.json'));
+});
+
 async function startServer() {
   // Check environment to mount Vite or static build
   const isProd = process.env.NODE_ENV === 'production';
